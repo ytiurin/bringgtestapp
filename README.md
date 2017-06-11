@@ -6,9 +6,13 @@ NodeJS, MongoDB, Postman.
    ```
    git clone git@github.com:ytiurin/bringgtestapp.git
    ```
-2. Paste the provided `config.js` file to the app folder
-3. Run MongoDB
-4. Run the app
+2. Install NPM dependencies
+   ```
+   cd bringgtestapp && npm install
+   ```
+3. Paste the provided `config.js` file to the app folder
+4. Run MongoDB
+5. Run the app
    ```
    DEBUG=bringgtestapp:* npm start
    ```
