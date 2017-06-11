@@ -34,7 +34,7 @@ To create order:
 To get list of customer orders:
 - send `GET` request to http://localhost:3000/api/orders?phone=111 where `phone` parameter should be the one you used to post the order
 - the expected result is `JSON` response
-  ```
+  ```json
   {
     "status": "success",
     "data": [
