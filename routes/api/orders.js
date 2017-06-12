@@ -1,4 +1,5 @@
 var NEXT_ORDER_DELAY = 30 * 1000; // to protect server from multiple posts
+var WEEK_DURATION    = 7 * 24 * 60 * 60 * 1000;
 
 var express = require('express');
 var colors  = require('colors');
@@ -59,7 +60,9 @@ router.get('/', function(req, res, next) {
 
   Customer.findOne({ phone })
   .then( customer => {
-    var orders = customer.orders.map(order => ({
+    var orders = customer.orders
+    .filter(order => order.date.getTime() + WEEK_DURATION > Date.now())
+    .map(order => ({
       date:    order.date,
       name:    order.name,
       address: order.address,
@@ -70,13 +73,13 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.post('/', function(req, res) {
+router.post('/', function(req, res, next) {
   var errorMessage;
 
   ['name', 'phone', 'address'].every(fieldName => {
     if (req.body[fieldName])
       return true;
-    errorMessage = `Field "${fieldName}" is empty.`;
+    errorMessage = `Field '${fieldName}' is empty.`;
   });
 
   if (errorMessage)
